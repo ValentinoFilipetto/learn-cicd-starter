@@ -89,7 +89,7 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
+		Addr:    "127.0.0.1:8080",
 		Handler: router,
 	}
 
