@@ -41,15 +41,10 @@ jobs:
         - name: Build and push Docker image
           run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-460209/notely-ar-repo/notely:latest .
 
-        - name: Generate database token
-          id: db_token
-          run: |
-            TOKEN=$(turso db tokens create notely-db)
-
         - name: Run database migration
-          run: ./scripts/migrate.sh
+          run: ./scripts/migrateup.sh
           env:
-            DATABASE_URL: "${{ secrets.DATABASE_URL }}?authToken=$DATABASE_TOKEN"
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
         - name: Check git diff
           run: git diff
